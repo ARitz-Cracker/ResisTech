@@ -8,5 +8,6 @@ public class ResistInterface {
 		System.out.print("Hello, world!\r\n");
 		JOptionPane.showMessageDialog(null, "Hello, world!");
 		JOptionPane.showMessageDialog(null, "Hi Aritz!");
+		JOptionPane.showMessageDialog(null, "Lamentable gets all da pussy");
 	}
 }
