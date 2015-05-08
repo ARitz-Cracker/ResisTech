@@ -23,6 +23,10 @@ public class StartScreen extends JFrame {
 	/**
 	 * Launch the application.
 	 */
+	
+	public void createNumberOfResistors(){
+		
+	}
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -55,6 +59,7 @@ public class StartScreen extends JFrame {
 		JButton btnQuick = new JButton("Quick");
 		btnQuick.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(null, "Hello, world!");
 			}
 		});
 		btnQuick.setBounds(161, 63, 114, 42);

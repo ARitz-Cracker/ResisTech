@@ -6,18 +6,22 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 public class Quick2 extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField resistor1;
+	private JTextField resistor2;
+	private JTextField resistor3;
 
 	/**
 	 * Launch the application.
@@ -46,25 +50,20 @@ public class Quick2 extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		textField = new JTextField();
-		textField.setBounds(174, 26, 86, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		resistor1 = new JTextField();
+		resistor1.setBounds(174, 26, 86, 20);
+		contentPane.add(resistor1);
+		resistor1.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(174, 54, 86, 20);
-		contentPane.add(textField_1);
+		resistor2 = new JTextField();
+		resistor2.setColumns(10);
+		resistor2.setBounds(174, 54, 86, 20);
+		contentPane.add(resistor2);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(174, 85, 86, 20);
-		contentPane.add(textField_2);
-		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(174, 116, 86, 20);
-		contentPane.add(textField_3);
+		resistor3 = new JTextField();
+		resistor3.setColumns(10);
+		resistor3.setBounds(174, 85, 86, 20);
+		contentPane.add(resistor3);
 		
 		JLabel lblResistor = new JLabel("Resistor 1");
 		lblResistor.setHorizontalAlignment(SwingConstants.CENTER);
@@ -81,12 +80,12 @@ public class Quick2 extends JFrame {
 		lblResistor_2.setBounds(224, 70, 200, 50);
 		contentPane.add(lblResistor_2);
 		
-		JLabel lblResistor_3 = new JLabel("Resistor 4");
-		lblResistor_3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblResistor_3.setBounds(224, 101, 200, 50);
-		contentPane.add(lblResistor_3);
-		
 		JButton btnCalculate = new JButton("Calculate");
+		btnCalculate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		btnCalculate.setBounds(155, 173, 127, 36);
 		contentPane.add(btnCalculate);
 	}
