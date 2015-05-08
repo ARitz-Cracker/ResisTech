@@ -1,15 +1,20 @@
 package resistMain;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.*;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+
 import com.jgoodies.forms.factories.DefaultComponentFactory;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class StartScreen extends JFrame {
 
@@ -48,6 +53,10 @@ public class StartScreen extends JFrame {
 		contentPane.add(lblResistechCalculator);
 		
 		JButton btnQuick = new JButton("Quick");
+		btnQuick.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnQuick.setBounds(161, 63, 114, 42);
 		contentPane.add(btnQuick);
 		
