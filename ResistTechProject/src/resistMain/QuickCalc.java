@@ -2,6 +2,7 @@ package resistMain;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -11,6 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -40,6 +42,7 @@ public class QuickCalc extends JFrame {
 	 * Create the frame.
 	 */
 	public QuickCalc() {
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -71,8 +74,21 @@ public class QuickCalc extends JFrame {
 		lblResistor_2.setBounds(224, 70, 200, 50);
 		contentPane.add(lblResistor_2);
 		JButton btnCalculate = new JButton("Calculate");
+		
 		btnCalculate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String resist1string = resistor1.getText();
+				int resist1 = Integer.parseInt(resist1string);
+				
+				String resist2string = resistor2.getText();
+				int resist2 = Integer.parseInt(resist2string);
+				
+				String resist3string = resistor3.getText();
+				int resist3 = Integer.parseInt(resist3string);
+				
+				int resistFinal = resist1 + resist2 + resist3;
+				
+				System.out.println(resistFinal);
 			}
 		});
 		btnCalculate.setBounds(155, 173, 127, 36);
