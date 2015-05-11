@@ -14,9 +14,14 @@ import javax.swing.JProgressBar;
 import java.awt.event.MouseMotionAdapter;
 
 public class GUICalc extends JFrame {
+	//JFrame
 	private JPanel contentPane;
 	private JProgressBar progressBar;
+	
+	//Shape Creation Variables
 	private boolean dragging = false;
+	private int createPosX = 0;
+	private int createPosY = 0;
 	/**
 	 * Launch the application.
 	 */
@@ -44,19 +49,19 @@ public class GUICalc extends JFrame {
 			@Override
 			public void mouseMoved(MouseEvent e) {
 				if (!dragging){return;}
-				int length = e.getX() - progressBar.getX();
-				int height = e.getY() - progressBar.getY();
+				int length = e.getX() - createPosX;
+				int height = e.getY() - createPosY;
 				if (Math.abs(length) > Math.abs(height)){
 					if (length < 0){
-						progressBar.setBounds(progressBar.getX()+length, progressBar.getY(), -length, 8);
+						progressBar.setBounds(createPosX+length, createPosY, -length, 8);
 					}else{
-						progressBar.setBounds(progressBar.getX(), progressBar.getY(), length, 8);
+						progressBar.setBounds(createPosX, createPosY, length, 8);
 					}
 				}else{
 					if (height < 0){
-						progressBar.setBounds(progressBar.getX(), progressBar.getY()+height, 8, -height);
+						progressBar.setBounds(createPosX, createPosY+height, 8, -height);
 					}else{
-						progressBar.setBounds(progressBar.getX(), progressBar.getY(), 8, height);
+						progressBar.setBounds(createPosX, createPosY, 8, height);
 					}
 				}
 			}
@@ -66,7 +71,9 @@ public class GUICalc extends JFrame {
 			public void mousePressed(MouseEvent arg0) {
 				// TODO: CreateShape
 				if (!dragging){
-					progressBar.setBounds(arg0.getX() - 4, arg0.getY() - 4, 8, 8);
+					createPosX = arg0.getX();
+					createPosY = arg0.getY();
+					progressBar.setBounds(createPosX, createPosY, 8, 8);
 				}
 				dragging = !dragging;
 			}
