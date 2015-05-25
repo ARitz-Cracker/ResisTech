@@ -76,7 +76,7 @@ public class QuickCalc extends JFrame {
 		
 		btnCalculate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
-				System.out.println(resistFinal);
+				//System.out.println(resistFinal);
 			}
 		});
 		btnCalculate.setBounds(155, 173, 127, 36);
