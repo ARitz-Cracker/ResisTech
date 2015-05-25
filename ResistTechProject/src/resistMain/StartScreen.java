@@ -49,7 +49,10 @@ public class StartScreen extends JFrame {
 		JButton btnQuick = new JButton("Quick");
 		btnQuick.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showMessageDialog(null, "Hello, world!");
+				String numberOfResistors = JOptionPane.showInputDialog("Please enter the number of resistors");
+				if(Integer.parseInt(numberOfResistors)>5){
+				JOptionPane.showMessageDialog(null, numberOfResistors);
+				}
 			}
 		});
 		btnQuick.setBounds(161, 63, 114, 42);
