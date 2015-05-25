@@ -2,6 +2,7 @@ package resistMain;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -11,6 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -19,6 +21,9 @@ public class QuickCalc extends JFrame {
 	private JTextField resistor1;
 	private JTextField resistor2;
 	private JTextField resistor3;
+
+	
+	int resistNumber = 15;
 
 	/**
 	 * Launch the application.
@@ -40,39 +45,38 @@ public class QuickCalc extends JFrame {
 	 * Create the frame.
 	 */
 	public QuickCalc() {
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450,resistNumber*30+100);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		resistor1 = new JTextField();
-		resistor1.setBounds(174, 26, 86, 20);
-		contentPane.add(resistor1);
-		resistor1.setColumns(10);
-		resistor2 = new JTextField();
-		resistor2.setColumns(10);
-		resistor2.setBounds(174, 54, 86, 20);
-		contentPane.add(resistor2);
-		resistor3 = new JTextField();
-		resistor3.setColumns(10);
-		resistor3.setBounds(174, 85, 86, 20);
-		contentPane.add(resistor3);
-		JLabel lblResistor = new JLabel("Resistor 1");
-		lblResistor.setHorizontalAlignment(SwingConstants.CENTER);
-		lblResistor.setBounds(224, 11, 200, 50);
-		contentPane.add(lblResistor);
-		JLabel lblResistor_1 = new JLabel("Resistor 2");
-		lblResistor_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblResistor_1.setBounds(224, 39, 200, 50);
-		contentPane.add(lblResistor_1);
-		JLabel lblResistor_2 = new JLabel("Resistor 3");
-		lblResistor_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblResistor_2.setBounds(224, 70, 200, 50);
-		contentPane.add(lblResistor_2);
+		
+
+		int[] resistors = {};
+		
+		for(int i=0; i < resistNumber ; i++){
+			JTextField textField = new JTextField(String.valueOf(7));
+		    textField.setBounds(150, 20 + i * 25, 86, 20);
+		    String resistvalue = textField.getText();  
+		    int resistvalueint = Integer.parseInt(resistvalue);
+		       
+		    resistors[i] = resistvalueint;
+			
+		    contentPane.add(textField);
+		    
+		    /*JLabel lblResistor[i] = new JLabel("Resistor"+i);
+			lblResistor[i].setHorizontalAlignment(SwingConstants.CENTER);
+			lblResistor[i].setBounds(224, 20 + i * 25, 200, 50);
+			contentPane.add(lblResistor[i]);*/
+		}
+		
 		JButton btnCalculate = new JButton("Calculate");
+		
 		btnCalculate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {				
+				//System.out.println(resistFinal);
 			}
 		});
 		btnCalculate.setBounds(155, 173, 127, 36);

@@ -2,17 +2,26 @@ package resistMain;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import javax.swing.JProgressBar;
+import java.awt.event.MouseMotionAdapter;
 
 public class GUICalc extends JFrame {
+	//JFrame
 	private JPanel contentPane;
 	private JProgressBar progressBar;
-
+	
+	//Shape Creation Variables
+	private boolean dragging = false;
+	private int createPosX = 0;
+	private int createPosY = 0;
 	/**
 	 * Launch the application.
 	 */
@@ -36,17 +45,39 @@ public class GUICalc extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 920, 480);
 		contentPane = new JPanel();
+		contentPane.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				if (!dragging){return;}
+				int length = e.getX() - createPosX;
+				int height = e.getY() - createPosY;
+				if (Math.abs(length) > Math.abs(height)){
+					if (length < 0){
+						progressBar.setBounds(createPosX+length, createPosY, -length, 8);
+					}else{
+						progressBar.setBounds(createPosX, createPosY, length, 8);
+					}
+				}else{
+					if (height < 0){
+						progressBar.setBounds(createPosX, createPosY+height, 8, -height);
+					}else{
+						progressBar.setBounds(createPosX, createPosY, 8, height);
+					}
+				}
+			}
+		});
 		contentPane.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
 				// TODO: CreateShape
-				progressBar.setBounds(arg0.getX() - 4, arg0.getY() - 4, 8, 8);
+				if (!dragging){
+					createPosX = arg0.getX();
+					createPosY = arg0.getY();
+					progressBar.setBounds(createPosX, createPosY, 8, 8);
+				}
+				dragging = !dragging;
 			}
 
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO: ConfirmShape Ceration
-			}
 		});
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
