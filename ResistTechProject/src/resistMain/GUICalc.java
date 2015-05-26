@@ -12,6 +12,9 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JProgressBar;
 import java.awt.event.MouseMotionAdapter;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class GUICalc extends JFrame {
 	//JFrame
@@ -22,6 +25,7 @@ public class GUICalc extends JFrame {
 	private boolean dragging = false;
 	private int createPosX = 0;
 	private int createPosY = 0;
+	private JButton addLoadButt;
 	/**
 	 * Launch the application.
 	 */
@@ -85,5 +89,21 @@ public class GUICalc extends JFrame {
 		progressBar = new JProgressBar();
 		progressBar.setBounds(230, 188, 146, 14);
 		contentPane.add(progressBar);
+		
+		JButton addLineButt = new JButton("Add Lines");
+		addLineButt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		addLineButt.setBounds(0, 0, 125, 29);
+		contentPane.add(addLineButt);
+		
+		addLoadButt = new JButton("Add Load");
+		addLoadButt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		addLoadButt.setBounds(125, 0, 125, 29);
+		contentPane.add(addLoadButt);
 	}
 }
