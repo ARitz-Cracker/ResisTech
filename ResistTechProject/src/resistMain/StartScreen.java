@@ -46,17 +46,34 @@ public class StartScreen extends JFrame {
 		lblResistechCalculator.setHorizontalAlignment(SwingConstants.CENTER);
 		lblResistechCalculator.setBounds(116, 11, 200, 50);
 		contentPane.add(lblResistechCalculator);
-		JButton btnQuick = new JButton("Quick");
-		btnQuick.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				String numberOfResistors = JOptionPane.showInputDialog("Please enter the number of resistors");
-				if(Integer.parseInt(numberOfResistors)>5){
-				JOptionPane.showMessageDialog(null, numberOfResistors);
-				}
+
+		boolean invalid = true;
+		while (invalid) {
+			try {
+				JButton btnQuick = new JButton("Quick");
+				btnQuick.setBounds(161, 63, 114, 42);
+				contentPane.add(btnQuick);
+				btnQuick.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						String numberOfResistors = JOptionPane.showInputDialog("Please enter the number of resistors");
+						if (Integer.parseInt(numberOfResistors) > 0) {
+							int popUps = Integer.parseInt(numberOfResistors);
+							int sumOfResistors = 0;
+							for (int i = 1; i < popUps + 1; i++) {
+								String currentResistors = JOptionPane.showInputDialog("Enter the resistance of resistor "+ i);
+								sumOfResistors = sumOfResistors += Integer.parseInt(currentResistors);
+							}
+							JOptionPane.showMessageDialog(null, sumOfResistors);
+						} else {
+							JOptionPane.showMessageDialog(null,"There must be at least 1 resistor.");
+						}
+					}
+				});
+				invalid = false;
+			} catch (NumberFormatException e) {
+				System.out.println("Invalid Input");
 			}
-		});
-		btnQuick.setBounds(161, 63, 114, 42);
-		contentPane.add(btnQuick);
+		}
 		JButton btnNewButton = new JButton("Grid Mode");
 		btnNewButton.setBounds(161, 141, 114, 42);
 		contentPane.add(btnNewButton);
@@ -73,6 +90,7 @@ public class StartScreen extends JFrame {
 		lblDragAndDrop.setFont(new Font("Times New Roman", Font.PLAIN, 10));
 		lblDragAndDrop.setBounds(116, 179, 205, 50);
 		contentPane.add(lblDragAndDrop);
+
 		/*
 		 * imageLabel = new JLabel(""); Image img = new
 		 * ImageIcon(this.getClass()
