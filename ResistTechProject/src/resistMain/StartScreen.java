@@ -1,12 +1,16 @@
 package resistMain;
 
 import java.awt.*;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -35,9 +39,23 @@ public class StartScreen extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	
+	GUICalc gridMode;
+	
+	private void CreateGUICalc() {
+		gridMode = new GUICalc();		
+		gridMode.setVisible(false);
+	}
+	
 	public StartScreen() {
+		CreateGUICalc();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		GraphicsDevice gd = GraphicsEnvironment
+				.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+		setBounds(gd.getDisplayMode().getWidth() / 2 -  450 / 2, gd
+				.getDisplayMode().getHeight() / 2 - 300 / 2, 450, 300);
+		//setBounds(100, 100, 450, 300);
+		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -46,35 +64,40 @@ public class StartScreen extends JFrame {
 		lblResistechCalculator.setHorizontalAlignment(SwingConstants.CENTER);
 		lblResistechCalculator.setBounds(116, 11, 200, 50);
 		contentPane.add(lblResistechCalculator);
-
-		boolean invalid = true;
-		while (invalid) {
-			try {
-				JButton btnQuick = new JButton("Quick");
-				btnQuick.setBounds(161, 63, 114, 42);
-				contentPane.add(btnQuick);
-				btnQuick.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
+		JButton btnQuick = new JButton("Quick Series");
+		btnQuick.setBounds(263, 63, 114, 42);
+		contentPane.add(btnQuick);
+		btnQuick.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				boolean invalid = true;
+				while (invalid) {
+					try {
 						String numberOfResistors = JOptionPane.showInputDialog("Please enter the number of resistors");
-						if (Integer.parseInt(numberOfResistors) > 0) {
+						if (numberOfResistors != null) {
 							int popUps = Integer.parseInt(numberOfResistors);
 							int sumOfResistors = 0;
 							for (int i = 1; i < popUps + 1; i++) {
-								String currentResistors = JOptionPane.showInputDialog("Enter the resistance of resistor "+ i);
+								String currentResistors = JOptionPane.showInputDialog("Enter the resistance of resistor " + i);
 								sumOfResistors = sumOfResistors += Integer.parseInt(currentResistors);
 							}
 							JOptionPane.showMessageDialog(null, sumOfResistors);
-						} else {
-							JOptionPane.showMessageDialog(null,"There must be at least 1 resistor.");
-						}
+						} 
+						invalid = false;
+					} catch (NumberFormatException e) {
+						System.out.println("Invalid Input");
+						JOptionPane.showMessageDialog(null,
+								"Input must be integer values.");
+						
 					}
-				});
-				invalid = false;
-			} catch (NumberFormatException e) {
-				System.out.println("Invalid Input");
+				}
 			}
-		}
+		});
 		JButton btnNewButton = new JButton("Grid Mode");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				gridMode.setVisible(true);
+			}
+		});
 		btnNewButton.setBounds(161, 141, 114, 42);
 		contentPane.add(btnNewButton);
 		JLabel lblCalculatesResistanceFrom = new JLabel(
@@ -90,6 +113,14 @@ public class StartScreen extends JFrame {
 		lblDragAndDrop.setFont(new Font("Times New Roman", Font.PLAIN, 10));
 		lblDragAndDrop.setBounds(116, 179, 205, 50);
 		contentPane.add(lblDragAndDrop);
+		
+		JButton btnQuickParallel = new JButton("Quick Parallel");
+		btnQuickParallel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnQuickParallel.setBounds(50, 63, 114, 42);
+		contentPane.add(btnQuickParallel);
 
 		/*
 		 * imageLabel = new JLabel(""); Image img = new
