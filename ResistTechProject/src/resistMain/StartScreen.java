@@ -114,7 +114,7 @@ public class StartScreen extends JFrame {
 						String currentResistorsParallel = JOptionPane.showInputDialog("Enter the resistance of resistor " + q);
 						parallelNumber += Integer.parseInt(currentResistorsParallel);
 						
-						parallelResistance = 1/2;// parallelNumber;
+						parallelResistance = (double)1/(double) parallelNumber;
 						parallelResistanceTotal = 1/parallelResistance;
 					}
 					JOptionPane.showMessageDialog(null, parallelResistance);
