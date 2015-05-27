@@ -77,8 +77,7 @@ public class StartScreen extends JFrame {
 								String currentResistors = JOptionPane.showInputDialog("Enter the resistance of resistor " + i);
 								sumOfResistors = sumOfResistors += Integer.parseInt(currentResistors);
 							}
-							JOptionPane.showMessageDialog(null, 
-								"The resistance, in series, of the "+numberOfResistors+" resistors entered is "+sumOfResistors);
+							JOptionPane.showMessageDialog(null, sumOfResistors + " Î©");
 						} 
 						invalid = false;
 					} catch (NumberFormatException e) {
@@ -103,22 +102,32 @@ public class StartScreen extends JFrame {
 		JButton btnQuickParallel = new JButton("Quick Parallel");
 		btnQuickParallel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				boolean errorCheck = true;
+				while (errorCheck) {
+					try {
 				String numberOfResistorsParallel = JOptionPane.showInputDialog("Please enter the number of resistors");
 				
 				if (numberOfResistorsParallel != null) {
 					int popUpsParallel = Integer.parseInt(numberOfResistorsParallel);
 					double parallelResistance = 0;
-					double parallelResistanceTotal = 0;
-					int parallelNumber = 0;
+					double parallelNumber = 0;
 					for (int q = 1; q < popUpsParallel + 1; q++) {
 						String currentResistorsParallel = JOptionPane.showInputDialog("Enter the resistance of resistor " + q);
-						parallelNumber += Integer.parseInt(currentResistorsParallel);
+						parallelNumber += (double)1/Double.parseDouble(currentResistorsParallel);
 						
-						parallelResistance = 1/2;// parallelNumber;
-						parallelResistanceTotal = 1/parallelResistance;
+						parallelResistance = (double)1/(double) parallelNumber;
+
 					}
-					JOptionPane.showMessageDialog(null, parallelResistance);
+					JOptionPane.showMessageDialog(null, parallelResistance + "Ω");
 				} 
+				
+				errorCheck = false;
+					} catch (IllegalArgumentException e1) {
+						System.out.println("Invalid Input");
+						JOptionPane.showMessageDialog(null,	"Input must be a number.");
+						
+					}
+				}
 				
 				
 			}
