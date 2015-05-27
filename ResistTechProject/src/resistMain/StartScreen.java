@@ -77,8 +77,7 @@ public class StartScreen extends JFrame {
 								String currentResistors = JOptionPane.showInputDialog("Enter the resistance of resistor " + i);
 								sumOfResistors = sumOfResistors += Integer.parseInt(currentResistors);
 							}
-							JOptionPane.showMessageDialog(null, 
-								"The resistance, in series, of the "+numberOfResistors+" resistors entered is "+sumOfResistors);
+							JOptionPane.showMessageDialog(null, sumOfResistors + " Ω");
 						} 
 						invalid = false;
 					} catch (NumberFormatException e) {
