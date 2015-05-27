@@ -77,7 +77,7 @@ public class StartScreen extends JFrame {
 								String currentResistors = JOptionPane.showInputDialog("Enter the resistance of resistor " + i);
 								sumOfResistors = sumOfResistors += Integer.parseInt(currentResistors);
 							}
-							JOptionPane.showMessageDialog(null, sumOfResistors + " Ω");
+							JOptionPane.showMessageDialog(null, sumOfResistors + " Î©");
 						} 
 						invalid = false;
 					} catch (NumberFormatException e) {
@@ -118,7 +118,7 @@ public class StartScreen extends JFrame {
 						parallelResistance = (double)1/(double) parallelNumber;
 
 					}
-					JOptionPane.showMessageDialog(null, parallelResistance);
+					JOptionPane.showMessageDialog(null, parallelResistance + "Ω");
 				} 
 				
 				errorCheck = false;
