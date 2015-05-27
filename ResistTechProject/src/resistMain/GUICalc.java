@@ -71,14 +71,18 @@ public class GUICalc extends JFrame {
 				if (Math.abs(length) > Math.abs(height)){
 					if (length < 0){
 						progressBar.setBounds(createPosX+length, createPosY, -length, 8);
+						//System.out.println("2");
 					}else{
 						progressBar.setBounds(createPosX, createPosY, length, 8);
+						//System.out.println("0");
 					}
 				}else{
 					if (height < 0){
 						progressBar.setBounds(createPosX, createPosY+height, 8, -height);
+						//System.out.println("3");
 					}else{
 						progressBar.setBounds(createPosX, createPosY, 8, height);
+						//System.out.println("1");
 					}
 				}
 			}
