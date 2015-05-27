@@ -112,8 +112,8 @@ public class GUICalc extends JFrame {
 					break;
 				default:
 					JOptionPane.showMessageDialog(null,
-						    "Invalid mode during mousePressed. This shouldn't have happened...",
-						    "You broke it.",
+						    "Invalid mode during mousePressed.",
+						    "This should never happen",
 						    JOptionPane.ERROR_MESSAGE);
 					System.exit(1);
 				}
