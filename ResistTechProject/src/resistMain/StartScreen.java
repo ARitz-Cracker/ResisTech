@@ -103,6 +103,9 @@ public class StartScreen extends JFrame {
 		JButton btnQuickParallel = new JButton("Quick Parallel");
 		btnQuickParallel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				boolean errorCheck = true;
+				while (errorCheck) {
+					try {
 				String numberOfResistorsParallel = JOptionPane.showInputDialog("Please enter the number of resistors");
 				
 				if (numberOfResistorsParallel != null) {
@@ -118,6 +121,14 @@ public class StartScreen extends JFrame {
 					}
 					JOptionPane.showMessageDialog(null, parallelResistance);
 				} 
+				
+				errorCheck = false;
+					} catch (IllegalArgumentException e1) {
+						System.out.println("Invalid Input");
+						JOptionPane.showMessageDialog(null,	"Input must be a number.");
+						
+					}
+				}
 				
 				
 			}
