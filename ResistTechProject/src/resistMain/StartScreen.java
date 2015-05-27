@@ -103,6 +103,24 @@ public class StartScreen extends JFrame {
 		JButton btnQuickParallel = new JButton("Quick Parallel");
 		btnQuickParallel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String numberOfResistorsParallel = JOptionPane.showInputDialog("Please enter the number of resistors");
+				
+				if (numberOfResistorsParallel != null) {
+					int popUpsParallel = Integer.parseInt(numberOfResistorsParallel);
+					double parallelResistance = 0;
+					double parallelResistanceTotal = 0;
+					int parallelNumber = 0;
+					for (int q = 1; q < popUpsParallel + 1; q++) {
+						String currentResistorsParallel = JOptionPane.showInputDialog("Enter the resistance of resistor " + q);
+						parallelNumber += Integer.parseInt(currentResistorsParallel);
+						
+						parallelResistance = 1/2;// parallelNumber;
+						parallelResistanceTotal = 1/parallelResistance;
+					}
+					JOptionPane.showMessageDialog(null, parallelResistance);
+				} 
+				
+				
 			}
 		});
 		btnQuickParallel.setToolTipText("Calculate the resistance, in parallel, of multiple resistors");
