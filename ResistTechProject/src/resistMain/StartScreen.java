@@ -60,13 +60,10 @@ public class StartScreen extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		JLabel lblResistechCalculator = new JLabel("ResisTech Calculator");
-		lblResistechCalculator.setHorizontalAlignment(SwingConstants.CENTER);
-		lblResistechCalculator.setBounds(116, 11, 200, 50);
-		contentPane.add(lblResistechCalculator);
 		JButton btnQuick = new JButton("Quick Series");
 		btnQuick.setBounds(263, 63, 114, 42);
 		contentPane.add(btnQuick);
+		btnQuick.setToolTipText("Calculate the resistance, in series, of multiple resistors");
 		btnQuick.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean invalid = true;
@@ -80,7 +77,8 @@ public class StartScreen extends JFrame {
 								String currentResistors = JOptionPane.showInputDialog("Enter the resistance of resistor " + i);
 								sumOfResistors = sumOfResistors += Integer.parseInt(currentResistors);
 							}
-							JOptionPane.showMessageDialog(null, sumOfResistors);
+							JOptionPane.showMessageDialog(null, 
+								"The resistance, in series, of the "+numberOfResistors+" resistors entered is "+sumOfResistors);
 						} 
 						invalid = false;
 					} catch (NumberFormatException e) {
@@ -98,27 +96,16 @@ public class StartScreen extends JFrame {
 				gridMode.setVisible(true);
 			}
 		});
+		btnNewButton.setToolTipText("Calculate the resistance of a circuit in a GUI");
 		btnNewButton.setBounds(161, 141, 114, 42);
 		contentPane.add(btnNewButton);
-		JLabel lblCalculatesResistanceFrom = new JLabel(
-				"Calculates resistance from user text input (Series only)");
-		lblCalculatesResistanceFrom
-				.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCalculatesResistanceFrom.setFont(new Font("Times New Roman",
-				Font.PLAIN, 10));
-		lblCalculatesResistanceFrom.setBounds(104, 99, 235, 50);
-		contentPane.add(lblCalculatesResistanceFrom);
-		JLabel lblDragAndDrop = new JLabel("Drag and drop components");
-		lblDragAndDrop.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDragAndDrop.setFont(new Font("Times New Roman", Font.PLAIN, 10));
-		lblDragAndDrop.setBounds(116, 179, 205, 50);
-		contentPane.add(lblDragAndDrop);
 		
 		JButton btnQuickParallel = new JButton("Quick Parallel");
 		btnQuickParallel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
+		btnQuickParallel.setToolTipText("Calculate the resistance, in parallel, of multiple resistors");
 		btnQuickParallel.setBounds(50, 63, 114, 42);
 		contentPane.add(btnQuickParallel);
 

@@ -59,7 +59,7 @@ public class QuickCalc extends JFrame {
 		for(int i=0; i < resistNumber ; i++){
 			JTextField textField = new JTextField(String.valueOf(7));
 		    textField.setBounds(150, 20 + i * 25, 86, 20);
-		    String resistvalue = textField.getText();  
+		    String resistvalue = textField.getText();
 		    int resistvalueint = Integer.parseInt(resistvalue);
 		       
 		    resistors[i] = resistvalueint;
