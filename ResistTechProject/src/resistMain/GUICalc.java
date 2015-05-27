@@ -128,6 +128,7 @@ public class GUICalc extends JFrame {
 		contentPane.add(progressBar);
 		
 		JButton addLineButt = new JButton("Add Circuitry");
+		addLineButt.setToolTipText("Click to start a wire, and click again to end it.");
 		addLineButt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				mode = MODE_LINE;
@@ -137,6 +138,7 @@ public class GUICalc extends JFrame {
 		contentPane.add(addLineButt);
 		
 		addLoadButt = new JButton("Add Load");
+		addLoadButt.setToolTipText("Click on a line to add a resistor");
 		addLoadButt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (mode == MODE_LINE){dragging = false;}
@@ -147,6 +149,7 @@ public class GUICalc extends JFrame {
 		contentPane.add(addLoadButt);
 		
 		JButton delButt = new JButton("Delete");
+		delButt.setToolTipText("Click on objects to delete a resistor/wire.");
 		delButt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (mode == MODE_LINE){dragging = false;}
