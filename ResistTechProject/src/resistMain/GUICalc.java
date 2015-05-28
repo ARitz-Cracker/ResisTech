@@ -149,7 +149,7 @@ public class GUICalc extends JFrame {
 		contentPane.add(addLoadButt);
 		
 		JButton delButt = new JButton("Delete");
-		delButt.setToolTipText("Click on objects to delete a resistor/wire.");
+		delButt.setToolTipText("Click on objects to delete them.");
 		delButt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (mode == MODE_LINE){dragging = false;}

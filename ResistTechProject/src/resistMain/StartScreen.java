@@ -131,7 +131,7 @@ public class StartScreen extends JFrame {
 
 							}
 							JOptionPane.showMessageDialog(null,
-									parallelResistance + " Ω");
+									parallelResistance + "Ω");
 						}
 
 						errorCheck = false;
