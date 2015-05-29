@@ -4,7 +4,7 @@ import javax.swing.JButton;
 
 public class Resistor extends JButton {
 	private int id;
-	private int load;
+	private int load = 0;
 	
 	public void SetID(int val) {
 		id = val;
@@ -19,6 +19,7 @@ public class Resistor extends JButton {
 	}
 	
 	public void SetLoad(int val){
+		this.setText(val+"Ω");
 		load = val;
 	}
 

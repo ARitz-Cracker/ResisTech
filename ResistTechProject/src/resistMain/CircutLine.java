@@ -122,7 +122,7 @@ public class CircutLine extends JProgressBar {
 	private Resistor[] fnResistorArray(int m) {
 		Resistor arrButtons[] = new Resistor[m];
 		for (int i = 0; i < m; i += 1) {
-			arrButtons[i].removeAll();
+			//arrButtons[i].removeAll();
 			arrButtons[i] = null;
 		}
 		return arrButtons;
