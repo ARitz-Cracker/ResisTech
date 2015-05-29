@@ -23,7 +23,6 @@ import java.awt.event.ActionEvent;
 public class GUICalc extends JFrame {
 	//JFrame
 	private JPanel contentPane;
-	private JProgressBar progressBar;
 	
 	//Shape Creation Variables
 	final private int MODE_NONE = 0;
@@ -39,6 +38,8 @@ public class GUICalc extends JFrame {
 	private int createPosY = 0;
 	private JButton addLoadButt;
 	
+	private CircutLine[] lines = fnLineArray(32);
+	private int creatingLine = -1;
 	/**
 	 * Launch the application.
 	 */
@@ -70,18 +71,22 @@ public class GUICalc extends JFrame {
 				int height = e.getY() - createPosY;
 				if (Math.abs(length) > Math.abs(height)){
 					if (length < 0){
-						progressBar.setBounds(createPosX+length, createPosY, -length, 8);
+						lines[creatingLine].setBounds(createPosX+length, createPosY, -length, 8);
+						lines[creatingLine].SetOrientation((byte) 2);
 						//System.out.println("2");
 					}else{
-						progressBar.setBounds(createPosX, createPosY, length, 8);
+						lines[creatingLine].setBounds(createPosX, createPosY, length, 8);
+						lines[creatingLine].SetOrientation((byte) 0);
 						//System.out.println("0");
 					}
 				}else{
 					if (height < 0){
-						progressBar.setBounds(createPosX, createPosY+height, 8, -height);
+						lines[creatingLine].setBounds(createPosX, createPosY+height, 8, -height);
+						lines[creatingLine].SetOrientation((byte) 3);
 						//System.out.println("3");
 					}else{
-						progressBar.setBounds(createPosX, createPosY, 8, height);
+						lines[creatingLine].setBounds(createPosX, createPosY, 8, height);
+						lines[creatingLine].SetOrientation((byte) 1);
 						//System.out.println("1");
 					}
 				}
@@ -90,7 +95,6 @@ public class GUICalc extends JFrame {
 		contentPane.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				// TODO: CreateShape
 				switch(mode){
 				case MODE_NONE:
 					break;
@@ -98,7 +102,63 @@ public class GUICalc extends JFrame {
 					if (!dragging){
 						createPosX = arg0.getX();
 						createPosY = arg0.getY();
-						progressBar.setBounds(createPosX, createPosY, 8, 8);
+						for (int i=0;i<lines.length;i+=1){
+							if (lines[i] == null){
+								creatingLine = i;
+								lines[i] = new CircutLine();
+								lines[i].setBounds(createPosX, createPosY, 8, 8);
+								lines[i].SetPanel(contentPane);
+								lines[i].addMouseListener(new MouseAdapterThatTakesInGoddamnArguments(i) {
+									@Override
+									public void mouseClicked(MouseEvent arg0) {
+										switch(mode){
+										case MODE_DELETE:
+											lines[argInt].removeAll();
+											lines[argInt] = null;
+											break;
+										case MODE_LOAD:
+											Resistor rstr = lines[argInt].SetResistor(arg0.getX(), arg0.getY());
+											rstr.setText("0Ω");
+											rstr.setActionCommand(Integer.toString(argInt)+"|"+Integer.toString(rstr.GetID())); //Pass the id to the button action so we know what button they actually pressed!
+											rstr.addActionListener(new ActionListener() {
+												public void actionPerformed(ActionEvent arg0) {
+													String[] strs = arg0.getActionCommand().split("|");
+													int lineid = Integer.parseInt(strs[0]);
+													int resistorid = Integer.parseInt(strs[1]);
+													switch(mode){
+													case MODE_DELETE:
+														lines[lineid].RemoveResistor(resistorid);
+														break;
+														default:
+															boolean needinput = true;
+															String input;
+															while (needinput) {
+																try{
+																input = JOptionPane.showInputDialog("You got a high score! Enter your name so everyone can see good you are at clicking things!");
+																if (input == null) { // User has clicked cancel
+																	needinput = false;
+																} else {
+																	
+																	lines[lineid].GetResistor(resistorid).SetLoad(Integer.parseInt(input));
+																}
+																}catch(NumberFormatException e){
+																	JOptionPane.showMessageDialog(null,
+																			"Input must be integer values.");
+																}
+															}
+													}
+													
+												}
+											});
+											default:
+										}
+									}
+								});
+								
+								contentPane.add(lines[i]);
+								break;
+							}
+						}
 					}
 					dragging = !dragging;
 					break;
@@ -123,9 +183,7 @@ public class GUICalc extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		progressBar = new JProgressBar();
-		progressBar.setBounds(230, 188, 146, 14);
-		contentPane.add(progressBar);
+		
 		
 		JButton addLineButt = new JButton("Add Circuitry");
 		addLineButt.setToolTipText("Click to start a wire, and click again to end it.");
@@ -158,6 +216,13 @@ public class GUICalc extends JFrame {
 		});
 		delButt.setBounds(250, 0, 125, 29);
 		contentPane.add(delButt);
-		
+	}
+	private CircutLine[] fnLineArray(int m) {
+		CircutLine arrButtons[] = new CircutLine[m];
+		for (int i = 0; i < m; i += 1) {
+			//arrButtons[i].removeAll();
+			arrButtons[i] = null;
+		}
+		return arrButtons;
 	}
 }
