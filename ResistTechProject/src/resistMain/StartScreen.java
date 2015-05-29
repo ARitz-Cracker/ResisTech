@@ -159,3 +159,20 @@ public class StartScreen extends JFrame {
 		 */
 	}
 }
+
+/*double[]whatIsAnArray = {2,69,200,690};
+double whatIsParallelCuzIDK = 0;
+double whatIsResistanceCuzIDK = 0;
+for(int p = 0; p < whatIsAnArray.length; p++){
+	whatIsParallelCuzIDK += (double)1/(double)whatIsAnArray[p];
+	whatIsResistanceCuzIDK = (double)1/(double) whatIsParallelCuzIDK;
+}
+JOptionPane.showMessageDialog(null, whatIsResistanceCuzIDK + "Ω");*/
+
+/*double[]whatIsASeriesArray = {2,69,200,690};
+double seriesLOL = 0;
+for(int t = 0; t < whatIsASeriesArray.length; t++){
+	seriesLOL += whatIsASeriesArray[t];
+}
+JOptionPane.showMessageDialog(null, seriesLOL + "Ω");*/
+
