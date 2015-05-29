@@ -1,2 +1,7 @@
 eclipse.preferences.version=1
+<<<<<<< HEAD
 encoding//src/resistMain/StartScreen.java=UTF-8
+=======
+encoding//src/resistMain/GUICalc.java=UTF-8
+encoding//src/resistMain/Resistor.java=UTF-8
+>>>>>>> branch 'master' of https://github.com/ARitz-Cracker/ResisTech.git

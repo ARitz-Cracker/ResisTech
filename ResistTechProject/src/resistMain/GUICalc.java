@@ -95,7 +95,6 @@ public class GUICalc extends JFrame {
 		contentPane.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				// TODO: CreateShape
 				switch(mode){
 				case MODE_NONE:
 					break;
@@ -108,6 +107,54 @@ public class GUICalc extends JFrame {
 								creatingLine = i;
 								lines[i] = new CircutLine();
 								lines[i].setBounds(createPosX, createPosY, 8, 8);
+								lines[i].SetPanel(contentPane);
+								lines[i].addMouseListener(new MouseAdapterThatTakesInGoddamnArguments(i) {
+									@Override
+									public void mouseClicked(MouseEvent arg0) {
+										switch(mode){
+										case MODE_DELETE:
+											lines[argInt].removeAll();
+											lines[argInt] = null;
+											break;
+										case MODE_LOAD:
+											Resistor rstr = lines[argInt].SetResistor(arg0.getX(), arg0.getY());
+											rstr.setText("0Ω");
+											rstr.setActionCommand(Integer.toString(argInt)+"|"+Integer.toString(rstr.GetID())); //Pass the id to the button action so we know what button they actually pressed!
+											rstr.addActionListener(new ActionListener() {
+												public void actionPerformed(ActionEvent arg0) {
+													String[] strs = arg0.getActionCommand().split("|");
+													int lineid = Integer.parseInt(strs[0]);
+													int resistorid = Integer.parseInt(strs[1]);
+													switch(mode){
+													case MODE_DELETE:
+														lines[lineid].RemoveResistor(resistorid);
+														break;
+														default:
+															boolean needinput = true;
+															String input;
+															while (needinput) {
+																try{
+																input = JOptionPane.showInputDialog("You got a high score! Enter your name so everyone can see good you are at clicking things!");
+																if (input == null) { // User has clicked cancel
+																	needinput = false;
+																} else {
+																	
+																	lines[lineid].GetResistor(resistorid).SetLoad(Integer.parseInt(input));
+																}
+																}catch(NumberFormatException e){
+																	JOptionPane.showMessageDialog(null,
+																			"Input must be integer values.");
+																}
+															}
+													}
+													
+												}
+											});
+											default:
+										}
+									}
+								});
+								
 								contentPane.add(lines[i]);
 								break;
 							}
@@ -173,7 +220,7 @@ public class GUICalc extends JFrame {
 	private CircutLine[] fnLineArray(int m) {
 		CircutLine arrButtons[] = new CircutLine[m];
 		for (int i = 0; i < m; i += 1) {
-			arrButtons[i].removeAll();
+			//arrButtons[i].removeAll();
 			arrButtons[i] = null;
 		}
 		return arrButtons;
