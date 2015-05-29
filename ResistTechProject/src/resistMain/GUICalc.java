@@ -117,11 +117,13 @@ public class GUICalc extends JFrame {
 											lines[argInt] = null;
 											break;
 										case MODE_LOAD:
-											Resistor rstr = lines[argInt].SetResistor(arg0.getX(), arg0.getY());
+											System.out.println(contentPane.getX());
+											Resistor rstr = lines[argInt].SetResistor(lines[argInt].getX() + arg0.getX(), lines[argInt].getY() + arg0.getY());
 											rstr.setText("0Ω");
 											rstr.setActionCommand(Integer.toString(argInt)+"|"+Integer.toString(rstr.GetID())); //Pass the id to the button action so we know what button they actually pressed!
 											rstr.addActionListener(new ActionListener() {
 												public void actionPerformed(ActionEvent arg0) {
+													System.out.println(arg0.getActionCommand());
 													String[] strs = arg0.getActionCommand().split("|");
 													int lineid = Integer.parseInt(strs[0]);
 													int resistorid = Integer.parseInt(strs[1]);
