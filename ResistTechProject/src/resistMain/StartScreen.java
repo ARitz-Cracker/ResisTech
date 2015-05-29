@@ -61,7 +61,7 @@ public class StartScreen extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		JButton btnQuick = new JButton("Quick Series");
-		btnQuick.setBounds(263, 63, 114, 42);
+		btnQuick.setBounds(260, 157, 114, 42);
 		contentPane.add(btnQuick);
 		btnQuick.setToolTipText("Calculate the resistance, in series, of multiple resistors");
 		btnQuick.addActionListener(new ActionListener() {
@@ -102,7 +102,7 @@ public class StartScreen extends JFrame {
 		});
 		btnNewButton
 				.setToolTipText("Calculate the resistance of a circuit in a GUI");
-		btnNewButton.setBounds(161, 141, 114, 42);
+		btnNewButton.setBounds(165, 218, 114, 42);
 		contentPane.add(btnNewButton);
 
 		JButton btnQuickParallel = new JButton("Quick Parallel");
@@ -147,8 +147,23 @@ public class StartScreen extends JFrame {
 		});
 		btnQuickParallel
 				.setToolTipText("Calculate the resistance, in parallel, of multiple resistors");
-		btnQuickParallel.setBounds(50, 63, 114, 42);
+		btnQuickParallel.setBounds(70, 157, 114, 42);
 		contentPane.add(btnQuickParallel);
+		try{
+			BufferedImage buttonIcon;
+			buttonIcon = ImageIO.read(new File("resources/resistech.png"));
+			JButton btnNewButton_1 = new JButton(new ImageIcon(buttonIcon));
+			
+			btnNewButton_1.setBorder(BorderFactory.createEmptyBorder());
+			btnNewButton_1.setContentAreaFilled(false);
+			btnNewButton_1.setBounds(0, 0, 444, 152);
+			contentPane.add(btnNewButton_1);
+			btnNewButton_1.setBorderPainted(false);
+		}
+		catch(IOException e){
+			JOptionPane.showMessageDialog(null,
+					"Cannot find resistech.png");
+		}
 
 		/*
 		 * imageLabel = new JLabel(""); Image img = new
