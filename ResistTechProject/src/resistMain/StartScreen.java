@@ -39,7 +39,7 @@ public class StartScreen extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-
+	
 	GUICalc gridMode;
 
 	private void CreateGUICalc() {
