@@ -120,7 +120,7 @@ public class CircutLine extends JProgressBar {
 		}
 		resistors[newid] = new Resistor();
 		
-		resistors[newid].setBounds(xpos-30, ypos-10, 60, 20);
+		resistors[newid].setBounds(xpos-40, ypos-10, 80, 20);
 		resistors[newid].SetID(newid);
 		contentplane.add(resistors[newid]);
 		return resistors[newid];
