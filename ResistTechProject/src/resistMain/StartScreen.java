@@ -175,6 +175,7 @@ public class StartScreen extends JFrame {
 	}
 }
 
+
 /*double[]whatIsAnArray = {2,69,200,690};
 double whatIsParallelCuzIDK = 0;
 double whatIsResistanceCuzIDK = 0;
@@ -183,6 +184,8 @@ for(int p = 0; p < whatIsAnArray.length; p++){
 	whatIsResistanceCuzIDK = (double)1/(double) whatIsParallelCuzIDK;
 }
 JOptionPane.showMessageDialog(null, whatIsResistanceCuzIDK + "Ω");*/
+
+//lines[lineid].GetResistor(resistorid).GetLoad();
 
 /*double[]whatIsASeriesArray = {2,69,200,690};
 double seriesLOL = 0;
