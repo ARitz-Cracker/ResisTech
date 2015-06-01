@@ -102,7 +102,7 @@ public class GUICalc extends JFrame {
 				case MODE_LINE:
 					//oldLine
 					if (dragging){
-						if (lines[oldLine].AddNext(lines[oldLine].GetOrientation(), oldLine)){
+						if (oldLine == -1 || lines[oldLine].AddNext(lines[oldLine].GetOrientation(), oldLine)){
 							dragging = false;
 						}else{
 							JOptionPane.showMessageDialog(null,
