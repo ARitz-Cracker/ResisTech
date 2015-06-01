@@ -100,7 +100,7 @@ public class GUICalc extends JFrame {
 				case MODE_NONE:
 					break;
 				case MODE_LINE:
-					if (StartLineCreation(arg0.getX(),arg0.getY()) == -1){
+					if (!dragging && StartLineCreation(arg0.getX(),arg0.getY()) == -1){
 						JOptionPane.showMessageDialog(null,
 							    "Too many lines, probably.",
 							    "Something happened",
@@ -162,6 +162,17 @@ public class GUICalc extends JFrame {
 		});
 		delButt.setBounds(250, 0, 125, 29);
 		contentPane.add(delButt);
+		
+		JButton selButt = new JButton("Select");
+		selButt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (mode == MODE_LINE){dragging = false;}
+				mode = MODE_NONE;
+			}
+		});
+		selButt.setToolTipText("Click on objects to delete them.");
+		selButt.setBounds(375, 0, 125, 29);
+		contentPane.add(selButt);
 	}
 	private CircutLine[] fnLineArray(int m) {
 		CircutLine arrButtons[] = new CircutLine[m];
@@ -187,15 +198,17 @@ public class GUICalc extends JFrame {
 						public void mouseClicked(MouseEvent arg0) {
 							switch(mode){
 							case MODE_LINE:
-								int nextline = StartLineCreation(lines[argInt].getX() + arg0.getX(), lines[argInt].getY() + arg0.getY());
-								if (nextline == -1){
-									JOptionPane.showMessageDialog(null,
-										    "Too many lines, probably.",
-										    "Something happened",
-										    JOptionPane.ERROR_MESSAGE);
-								}else{
-									
-									dragging = true;
+								if (!dragging){
+									int nextline = StartLineCreation(lines[argInt].getX() + arg0.getX(), lines[argInt].getY() + arg0.getY());
+									if (nextline == -1){
+										JOptionPane.showMessageDialog(null,
+											    "Too many lines, probably.",
+											    "Something happened",
+											    JOptionPane.ERROR_MESSAGE);
+									}else{
+										
+										dragging = true;
+									}
 								}
 								break;
 							
@@ -232,7 +245,7 @@ public class GUICalc extends JFrame {
 												String input;
 												while (needinput) {
 													try{
-													input = JOptionPane.showInputDialog("You got a high score! Enter your name so everyone can see good you are at clicking things!");
+													input = JOptionPane.showInputDialog("What do you want the resistance to be?");
 													if (input == null) { // User has clicked cancel
 														needinput = false;
 													} else {
@@ -252,12 +265,15 @@ public class GUICalc extends JFrame {
 							}
 						}
 					});
+					
 					result = i;
+					System.out.println(result);
 					contentPane.add(lines[i]);
 					break;
 				}
 			}
 		}
+		System.out.println(result);
 		return result;
 	}
 }
