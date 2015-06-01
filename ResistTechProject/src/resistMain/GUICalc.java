@@ -100,7 +100,12 @@ public class GUICalc extends JFrame {
 				case MODE_NONE:
 					break;
 				case MODE_LINE:
-					StartLineCreation(arg0.getX(),arg0.getY());
+					if (StartLineCreation(arg0.getX(),arg0.getY()) == -1){
+						JOptionPane.showMessageDialog(null,
+							    "Too many lines, probably.",
+							    "Something happened",
+							    JOptionPane.ERROR_MESSAGE);
+					}
 					dragging = !dragging;
 					break;
 				case MODE_LOAD:
@@ -166,7 +171,8 @@ public class GUICalc extends JFrame {
 		}
 		return arrButtons;
 	}
-	private void StartLineCreation(int mx,int my){
+	private int StartLineCreation(int mx,int my){
+		int result = -1;
 		if (!dragging){
 			createPosX = mx;
 			createPosY = my;
@@ -181,7 +187,16 @@ public class GUICalc extends JFrame {
 						public void mouseClicked(MouseEvent arg0) {
 							switch(mode){
 							case MODE_LINE:
-								StartLineCreation(lines[argInt].getX() + arg0.getX(), lines[argInt].getY() + arg0.getY());
+								int nextline = StartLineCreation(lines[argInt].getX() + arg0.getX(), lines[argInt].getY() + arg0.getY());
+								if (nextline == -1){
+									JOptionPane.showMessageDialog(null,
+										    "Too many lines, probably.",
+										    "Something happened",
+										    JOptionPane.ERROR_MESSAGE);
+								}else{
+									
+									dragging = true;
+								}
 								break;
 							
 							case MODE_DELETE:
@@ -237,11 +252,12 @@ public class GUICalc extends JFrame {
 							}
 						}
 					});
-					
+					result = i;
 					contentPane.add(lines[i]);
 					break;
 				}
 			}
 		}
+		return result;
 	}
 }

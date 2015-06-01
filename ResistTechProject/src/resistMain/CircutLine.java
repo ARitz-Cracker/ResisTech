@@ -7,7 +7,7 @@ public class CircutLine extends JProgressBar {
 	//Functions that Create an array of objects
 	final int maxResistors = 16;
 	private byte orientation = 0;
-	private int nextLine = -1;
+	private int[] nextLine = {-1,-1,-1,-1};
 	//East = 0
 	//South = 1
 	//West = 2
@@ -22,11 +22,15 @@ public class CircutLine extends JProgressBar {
 	public void SetOrientation(byte val){
 		orientation = val;
 	}
-	public void setNext(int val){
-		nextLine = val;
+	public boolean addNext(byte orient,int val){
+		if ((orient!=orientation && orient%1==orientation%1)||nextLine[orient] != -1){ 
+			return false;
+		}
+		nextLine[orientation] = val;
+		return true;
 	}
-	public int getNext(int val){
-		return nextLine;
+	public int getNext(byte orient,int val){
+		return nextLine[orient];
 	}
 	public int GetResistorCount(){
 		int result = 0;
