@@ -251,6 +251,7 @@ public class GUICalc extends JFrame {
 													} else {
 														
 														lines[lineid].GetResistor(resistorid).SetLoad(Integer.parseInt(input));
+														needinput = false;
 													}
 													}catch(NumberFormatException e){
 														JOptionPane.showMessageDialog(null,
