@@ -56,6 +56,8 @@ public class CircutLine extends JProgressBar {
 		if (resistors[id] == null){
 			throw new ArrayIndexOutOfBoundsException();
 		}
+		
+		resistors[id].setVisible(false); // TODO: Figure out how to properly remove something
 		resistors[id].removeAll(); // Kill the specified resistor
 		resistors[id] = null;
 		if (id+1 < maxResistors){

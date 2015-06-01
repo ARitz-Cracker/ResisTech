@@ -92,6 +92,7 @@ public class GUICalc extends JFrame {
 				}
 			}
 		});
+
 		contentPane.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
@@ -99,69 +100,7 @@ public class GUICalc extends JFrame {
 				case MODE_NONE:
 					break;
 				case MODE_LINE:
-					if (!dragging){
-						createPosX = arg0.getX();
-						createPosY = arg0.getY();
-						for (int i=0;i<lines.length;i+=1){
-							if (lines[i] == null){
-								creatingLine = i;
-								lines[i] = new CircutLine();
-								lines[i].setBounds(createPosX, createPosY, 8, 8);
-								lines[i].SetPanel(contentPane);
-								lines[i].addMouseListener(new MouseAdapterThatTakesInGoddamnArguments(i) {
-									@Override
-									public void mouseClicked(MouseEvent arg0) {
-										switch(mode){
-										case MODE_DELETE:
-											lines[argInt].removeAll();
-											lines[argInt] = null;
-											break;
-										case MODE_LOAD:
-											System.out.println(contentPane.getX());
-											Resistor rstr = lines[argInt].SetResistor(lines[argInt].getX() + arg0.getX(), lines[argInt].getY() + arg0.getY());
-											rstr.setText("0Ω");
-											rstr.setActionCommand(Integer.toString(argInt)+"|"+Integer.toString(rstr.GetID())); //Pass the id to the button action so we know what button they actually pressed!
-											rstr.addActionListener(new ActionListener() {
-												public void actionPerformed(ActionEvent arg0) {
-													System.out.println(arg0.getActionCommand());
-													String[] strs = arg0.getActionCommand().split("|");
-													int lineid = Integer.parseInt(strs[0]);
-													int resistorid = Integer.parseInt(strs[1]);
-													switch(mode){
-													case MODE_DELETE:
-														lines[lineid].RemoveResistor(resistorid);
-														break;
-														default:
-															boolean needinput = true;
-															String input;
-															while (needinput) {
-																try{
-																input = JOptionPane.showInputDialog("You got a high score! Enter your name so everyone can see good you are at clicking things!");
-																if (input == null) { // User has clicked cancel
-																	needinput = false;
-																} else {
-																	
-																	lines[lineid].GetResistor(resistorid).SetLoad(Integer.parseInt(input));
-																}
-																}catch(NumberFormatException e){
-																	JOptionPane.showMessageDialog(null,
-																			"Input must be integer values.");
-																}
-															}
-													}
-													
-												}
-											});
-											default:
-										}
-									}
-								});
-								
-								contentPane.add(lines[i]);
-								break;
-							}
-						}
-					}
+					StartLineCreation(arg0.getX(),arg0.getY());
 					dragging = !dragging;
 					break;
 				case MODE_LOAD:
@@ -226,5 +165,83 @@ public class GUICalc extends JFrame {
 			arrButtons[i] = null;
 		}
 		return arrButtons;
+	}
+	private void StartLineCreation(int mx,int my){
+		if (!dragging){
+			createPosX = mx;
+			createPosY = my;
+			for (int i=0;i<lines.length;i+=1){
+				if (lines[i] == null){
+					creatingLine = i;
+					lines[i] = new CircutLine();
+					lines[i].setBounds(createPosX, createPosY, 8, 8);
+					lines[i].SetPanel(contentPane);
+					lines[i].addMouseListener(new MouseAdapterThatTakesInGoddamnArguments(i) {
+						@Override
+						public void mouseClicked(MouseEvent arg0) {
+							switch(mode){
+							case MODE_LINE:
+								StartLineCreation(lines[argInt].getX() + arg0.getX(), lines[argInt].getY() + arg0.getY());
+								break;
+							
+							case MODE_DELETE:
+
+								for (int i=lines[argInt].GetResistorCount()-1;i>=0;i-=1){
+									lines[argInt].RemoveResistor(i);
+								}
+								lines[argInt].setVisible(false); // TODO: Figure out how to do this better.
+								lines[argInt].removeAll();
+								lines[argInt] = null;
+								
+								break;
+							case MODE_LOAD:
+								System.out.println(contentPane.getX());
+								Resistor rstr = lines[argInt].SetResistor(lines[argInt].getX() + arg0.getX(), lines[argInt].getY() + arg0.getY());
+								rstr.setText("0Ω");
+								rstr.setActionCommand(Integer.toString(argInt)+"|"+Integer.toString(rstr.GetID())); //Pass the id to the button action so we know what button they actually pressed!
+								rstr.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent arg0) {
+										System.out.println(arg0.getActionCommand());
+										String[] strs = arg0.getActionCommand().split("|");
+										for (int i=0;i<strs.length;i+=1){
+											System.out.println(i+ " => "+strs[i]);
+										}
+										int lineid = Integer.parseInt(strs[0]);
+										int resistorid = Integer.parseInt(strs[2]);
+										switch(mode){
+										case MODE_DELETE:
+											lines[lineid].RemoveResistor(resistorid);
+											break;
+											default:
+												boolean needinput = true;
+												String input;
+												while (needinput) {
+													try{
+													input = JOptionPane.showInputDialog("You got a high score! Enter your name so everyone can see good you are at clicking things!");
+													if (input == null) { // User has clicked cancel
+														needinput = false;
+													} else {
+														
+														lines[lineid].GetResistor(resistorid).SetLoad(Integer.parseInt(input));
+													}
+													}catch(NumberFormatException e){
+														JOptionPane.showMessageDialog(null,
+																"Input must be integer values.");
+													}
+												}
+										}
+										
+									}
+								});
+								default:
+							}
+						}
+					});
+					
+					contentPane.add(lines[i]);
+					break;
+				}
+			}
+		}
 	}
 }
