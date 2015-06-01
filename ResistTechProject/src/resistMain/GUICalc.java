@@ -37,7 +37,7 @@ public class GUICalc extends JFrame {
 	private int createPosX = 0;
 	private int createPosY = 0;
 	private JButton addLoadButt;
-	
+	private int oldLine = -1;
 	private CircutLine[] lines = fnLineArray(32);
 	private int creatingLine = -1;
 	/**
@@ -100,13 +100,27 @@ public class GUICalc extends JFrame {
 				case MODE_NONE:
 					break;
 				case MODE_LINE:
-					if (!dragging && StartLineCreation(arg0.getX(),arg0.getY()) == -1){
-						JOptionPane.showMessageDialog(null,
-							    "Too many lines, probably.",
-							    "Something happened",
-							    JOptionPane.ERROR_MESSAGE);
+					//oldLine
+					if (dragging){
+						if (lines[oldLine].AddNext(lines[oldLine].GetOrientation(), oldLine)){
+							dragging = false;
+						}else{
+							JOptionPane.showMessageDialog(null,
+								    "You can't have lines overlap.",
+								    "Something happened",
+								    JOptionPane.ERROR_MESSAGE);
+						}
+						
+					}else{
+						if (StartLineCreation(arg0.getX(),arg0.getY(),-1) == -1){
+							JOptionPane.showMessageDialog(null,
+								    "Too many lines, probably.",
+								    "Something happened",
+								    JOptionPane.ERROR_MESSAGE);
+						}else{
+							dragging = true;
+						}
 					}
-					dragging = !dragging;
 					break;
 				case MODE_LOAD:
 					break;
@@ -182,7 +196,8 @@ public class GUICalc extends JFrame {
 		}
 		return arrButtons;
 	}
-	private int StartLineCreation(int mx,int my){
+	private int StartLineCreation(int mx,int my,int curline){
+		oldLine = curline;
 		int result = -1;
 		if (!dragging){
 			createPosX = mx;
@@ -199,7 +214,29 @@ public class GUICalc extends JFrame {
 							switch(mode){
 							case MODE_LINE:
 								if (!dragging){
-									int nextline = StartLineCreation(lines[argInt].getX() + arg0.getX(), lines[argInt].getY() + arg0.getY());
+									int xpos = lines[argInt].getX() + arg0.getX();
+									int ypos = lines[argInt].getY() + arg0.getY();
+									switch(lines[argInt].GetOrientation()){
+									case 0:
+										xpos = lines[argInt].getX() + lines[argInt].getWidth();
+										break;
+									case 1:
+										ypos = lines[argInt].getY() + lines[argInt].getHeight();
+										break;
+									case 2:
+										xpos = lines[argInt].getX();
+										break;
+									case 3:
+										ypos = lines[argInt].getY();
+										break;
+										default:
+											JOptionPane.showMessageDialog(null,
+												    "Circut has an invalid orientation. ",
+												    "This should never happen",
+												    JOptionPane.ERROR_MESSAGE);
+											System.exit(1);
+									}
+									int nextline = StartLineCreation(xpos, ypos,argInt);
 									if (nextline == -1){
 										JOptionPane.showMessageDialog(null,
 											    "Too many lines, probably.",

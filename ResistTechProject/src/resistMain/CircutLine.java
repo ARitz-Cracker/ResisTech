@@ -18,11 +18,13 @@ public class CircutLine extends JProgressBar {
 	public void SetPanel(JPanel pan){
 		contentplane = pan;
 	}
-	
+	public byte GetOrientation(){
+		return orientation;
+	}
 	public void SetOrientation(byte val){
 		orientation = val;
 	}
-	public boolean addNext(byte orient,int val){
+	public boolean AddNext(byte orient,int val){
 		if ((orient!=orientation && orient%1==orientation%1)||nextLine[orient] != -1){ 
 			return false;
 		}
