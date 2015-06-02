@@ -38,6 +38,7 @@ public class GUICalc extends JFrame {
 	private int createPosY = 0;
 	private JButton addLoadButt;
 	private int oldLine = -1;
+	private int newLine = -1;
 	private CircutLine[] lines = fnLineArray(32);
 	private int creatingLine = -1;
 	/**
@@ -102,7 +103,7 @@ public class GUICalc extends JFrame {
 				case MODE_LINE:
 					//oldLine
 					if (dragging){
-						if (oldLine == -1 || lines[oldLine].AddNext(lines[oldLine].GetOrientation(), oldLine)){
+						if (oldLine == -1 || lines[oldLine].AddNext(lines[newLine].GetOrientation(), newLine)){
 							dragging = false;
 						}else{
 							JOptionPane.showMessageDialog(null,
@@ -112,7 +113,8 @@ public class GUICalc extends JFrame {
 						}
 						
 					}else{
-						if (StartLineCreation(arg0.getX(),arg0.getY(),-1) == -1){
+						newLine = StartLineCreation(arg0.getX(),arg0.getY(),-1);
+						if (newLine == -1){
 							JOptionPane.showMessageDialog(null,
 								    "Too many lines, probably.",
 								    "Something happened",
@@ -236,8 +238,9 @@ public class GUICalc extends JFrame {
 												    JOptionPane.ERROR_MESSAGE);
 											System.exit(1);
 									}
-									int nextline = StartLineCreation(xpos, ypos,argInt);
-									if (nextline == -1){
+									newLine = StartLineCreation(xpos, ypos,argInt);
+									System.out.println("Old line: "+argInt);
+									if (newLine == -1){
 										JOptionPane.showMessageDialog(null,
 											    "Too many lines, probably.",
 											    "Something happened",
