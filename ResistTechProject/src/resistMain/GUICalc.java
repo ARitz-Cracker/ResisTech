@@ -139,9 +139,31 @@ public class GUICalc extends JFrame {
 						    JOptionPane.ERROR_MESSAGE);
 					System.exit(1);
 				}
+				
+				double seriesLOL = 0;
+				double[]whatIsASeriesArray = {};
+				double whatIsParallelCuzIDK = 0;
+				double whatIsResistanceCuzIDK = 0;
+				for(int w = 0;  w<lines.length; w++ ){
+					for(int u = 0;  u</*resistor number*/8; u++ ){
+					double gettingValues = lines[w].GetResistor(u).GetLoad();
+					seriesLOL += gettingValues;
+					whatIsASeriesArray[w] = seriesLOL;
+				}
+				}
+				
+				for(int t = 0; t < whatIsASeriesArray.length; t++){
+					whatIsParallelCuzIDK += (double)1/(double)whatIsASeriesArray[t];
+					whatIsResistanceCuzIDK = (double)1/(double) whatIsParallelCuzIDK;
+				}
+				JOptionPane.showMessageDialog(null, whatIsResistanceCuzIDK + "Ω");
+			
+				
 			}
 
 		});
+		
+		
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
