@@ -41,6 +41,7 @@ public class GUICalc extends JFrame {
 	private int newLine = -1;
 	private CircutLine[] lines = fnLineArray(32);
 	private int creatingLine = -1;
+	private int startLine = -1;
 	/**
 	 * Launch the application.
 	 */
@@ -140,16 +141,19 @@ public class GUICalc extends JFrame {
 					System.exit(1);
 				}
 				
+				/*
 				double seriesLOL = 0;
 				double[]whatIsASeriesArray = {};
 				double whatIsParallelCuzIDK = 0;
 				double whatIsResistanceCuzIDK = 0;
+				int len = 0;
 				for(int w = 0;  w<lines.length; w++ ){
-					for(int u = 0;  u</*resistor number*/8; u++ ){
-					double gettingValues = lines[w].GetResistor(u).GetLoad();
-					seriesLOL += gettingValues;
-					whatIsASeriesArray[w] = seriesLOL;
-				}
+					len = lines[w].GetResistorCount();
+					for(int u = 0;  u<len; u++ ){
+						double gettingValues = lines[w].GetResistor(u).GetLoad();
+						seriesLOL += gettingValues;
+						whatIsASeriesArray[w] = seriesLOL;
+					}
 				}
 				
 				for(int t = 0; t < whatIsASeriesArray.length; t++){
@@ -157,7 +161,7 @@ public class GUICalc extends JFrame {
 					whatIsResistanceCuzIDK = (double)1/(double) whatIsParallelCuzIDK;
 				}
 				JOptionPane.showMessageDialog(null, whatIsResistanceCuzIDK + "Ω");
-			
+				*/
 				
 			}
 
@@ -211,6 +215,26 @@ public class GUICalc extends JFrame {
 		selButt.setToolTipText("Click on objects to delete them.");
 		selButt.setBounds(375, 0, 125, 29);
 		contentPane.add(selButt);
+		
+		JButton calcButt = new JButton("Calculate!");
+		calcButt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try{
+				double total = Calculate(startLine,-1);
+				System.out.println("Total value is:"+total);
+				JOptionPane.showMessageDialog(null,
+						"The total resistance is " + total + "Ω");
+				}catch(RuntimeException e){
+					JOptionPane.showMessageDialog(null,
+						    e.getMessage(),
+						    "Something happened",
+						    JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		calcButt.setToolTipText("Click on objects to delete them.");
+		calcButt.setBounds(502, 0, 125, 29);
+		contentPane.add(calcButt);
 	}
 	private CircutLine[] fnLineArray(int m) {
 		CircutLine arrButtons[] = new CircutLine[m];
@@ -220,6 +244,123 @@ public class GUICalc extends JFrame {
 		}
 		return arrButtons;
 	}
+	
+	private int GetEndOfBranch(int b1,int b2){
+		int result = -1;
+		int[] b1branch = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
+		byte b1branchlen = 0;
+		while (b1 != -1){
+			System.out.println("b1 = "+b1);
+			b1branch[b1branchlen] = b1;
+			b1 = lines[b1].GetNext();
+			b1branchlen += 1;
+		}
+		while (b2 != -1 && result == -1){
+			for (byte i=0;i<b1branchlen;i+=1){
+				System.out.println("b2 = "+b2+"; b1branch[i] = "+b1branch[i]+"; i = "+i);
+				if (b2 == b1branch[i]){
+					result = b1branch[i];
+					break;
+				}
+			}
+			b2 = lines[b2].GetNext();
+		}
+		if (result==-1){
+			throw new RuntimeException("There are some branches that exist which do not reconnect.");
+		}
+		return result;
+		
+	}
+	private int GetEndOfBranch(int b1,int b2,int b3){
+		int result = -1;
+		int[] b1branch = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
+		byte b1branchlen = 0;
+		while (b1 != -1){
+			b1branch[b1branchlen] = b1;
+			b1 = lines[b1].GetNext();
+			b1branchlen += 1;
+		}
+		
+		int[] b2branch = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
+		byte b2branchlen = 0;
+		
+		while (b2 != -1){
+			for (byte i=0;i<b1branchlen;i+=1){
+				if (b2 == b1branch[i]){
+					b2branch[b2branchlen] = b1branch[i];
+					b2branchlen += 1;
+					break;
+				}
+			}
+			b2 = lines[b2].GetNext();
+		}
+		
+		while (b3 != -1 && result != -1){
+			for (byte i=0;i<b2branchlen;i+=1){
+				if (b3 == b2branch[i]){
+					result = b2branch[i];
+					break;
+				}
+			}
+			b3 = lines[b3].GetNext();
+		}
+		
+		if (result==-1){
+			throw new RuntimeException("There are some branches that exist which do not reconnect.");
+		}
+		return result;
+		
+	}
+	
+	
+	private double Calculate(int lin,int end){
+		if (lin==end){return 0.0;}
+		double result = lines[lin].GetTotalResistance();
+		System.out.println("Line #"+lin+" has a load value of "+result);
+		byte nextlinesplace = 0;
+		int[] nextlines = {-1,-1,-1,-1};
+		for (byte i=0;i<4;i+=1){
+			int nex = lines[lin].GetNext(i);
+			if (nex != -1){
+				System.out.println("nex = "+nex);
+				nextlines[nextlinesplace] = nex;
+				nextlinesplace += 1;
+			}
+		}
+		double parallelNumber = 0;
+		int en = 0;
+		switch(nextlinesplace){
+		case 0:
+			// Do nothing
+			break;
+		case 1:
+			result = result + Calculate(nextlines[0],end);
+			break;
+		case 2:
+			parallelNumber = 0;
+			en = GetEndOfBranch(nextlines[0],nextlines[1]);
+			for (int q = 0; q < 2; q++) {
+				parallelNumber += (double) 1 / Calculate(nextlines[q],en);
+			}
+			result = result + (double) 1/ (double) parallelNumber + Calculate(en,end);
+			break;
+		default: // case 3:
+			parallelNumber = 0;
+			en = GetEndOfBranch(nextlines[0],nextlines[1],nextlines[2]);
+			for (int q = 0; q < 3; q++) {
+				parallelNumber += (double) 1 / Calculate(nextlines[q],en);
+			}
+			result = result + (double) 1/ (double) parallelNumber + Calculate(en,end);
+	
+		}
+
+		
+		
+		return result;
+		
+	}
+	
+	
 	private int StartLineCreation(int mx,int my,int curline){
 		oldLine = curline;
 		int result = -1;
@@ -236,9 +377,27 @@ public class GUICalc extends JFrame {
 						@Override
 						public void mouseClicked(MouseEvent arg0) {
 							switch(mode){
+							case MODE_NONE:
+								//Custom button text
+								if (JOptionPane.showOptionDialog(null,
+								    "Would you like this line to be the starting point?",
+								    "Start Line",
+								    JOptionPane.YES_NO_OPTION,
+								    JOptionPane.QUESTION_MESSAGE, null, null, null) == 0){
+									startLine = argInt;
+								}
+								break;
 							case MODE_LINE:
 								if (dragging){
-									if (oldLine == -1 || lines[oldLine].AddNext(lines[newLine].GetOrientation(), newLine)){
+									boolean valid = oldLine == -1 || lines[oldLine].AddNext(lines[newLine].GetOrientation(), newLine);
+									//lines[argInt]
+									for (byte i=0;i<4;i+=1){
+										int nex = lines[argInt].GetNext(i);
+										if (nex != -1){
+											valid = valid && lines[newLine].AddNext(i, nex);
+										}
+									}									
+									if (valid){
 										dragging = false;
 									}else{
 										JOptionPane.showMessageDialog(null,

@@ -34,7 +34,17 @@ public class CircutLine extends JProgressBar {
 		nextLine[orient] = val;
 		return true;
 	}
-	public int getNext(byte orient,int val){
+	public int GetNext(){
+		int res = -1;
+		for (byte i=0;i<4;i+=1){
+			res = nextLine[i];
+			if (res != -1){
+				break;
+			}
+		}
+		return res;
+	}
+	public int GetNext(byte orient){
 		return nextLine[orient];
 	}
 	public int GetResistorCount(){
@@ -129,6 +139,15 @@ public class CircutLine extends JProgressBar {
 		resistors[newid].SetID(newid);
 		contentplane.add(resistors[newid]);
 		return resistors[newid];
+	}
+	
+	public double GetTotalResistance(){
+		double res = 0;
+		int len = GetResistorCount();
+		for (int i=0;i<len;i+=1){
+			res += (double)GetResistor(i).GetLoad();
+		}
+		return res;
 	}
 	
 	private Resistor[] fnResistorArray(int m) {

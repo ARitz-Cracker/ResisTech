@@ -115,8 +115,7 @@ public class StartScreen extends JFrame {
 								.showInputDialog("Please enter the number of resistors");
 
 						if (numberOfResistorsParallel != null) {
-							int popUpsParallel = Integer
-									.parseInt(numberOfResistorsParallel);
+							int popUpsParallel = Integer.parseInt(numberOfResistorsParallel);
 							double parallelResistance = 0;
 							double parallelNumber = 0;
 							for (int q = 1; q < popUpsParallel + 1; q++) {
@@ -126,10 +125,11 @@ public class StartScreen extends JFrame {
 								parallelNumber += (double) 1
 										/ Double.parseDouble(currentResistorsParallel);
 
-								parallelResistance = (double) 1
-										/ (double) parallelNumber;
+
 
 							}
+							parallelResistance = (double) 1
+									/ (double) parallelNumber;
 							JOptionPane.showMessageDialog(null,
 									parallelResistance + "Ω");
 						}
