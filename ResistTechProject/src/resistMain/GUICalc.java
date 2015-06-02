@@ -215,7 +215,16 @@ public class GUICalc extends JFrame {
 						public void mouseClicked(MouseEvent arg0) {
 							switch(mode){
 							case MODE_LINE:
-								if (!dragging){
+								if (dragging){
+									if (oldLine == -1 || lines[oldLine].AddNext(lines[newLine].GetOrientation(), newLine)){
+										dragging = false;
+									}else{
+										JOptionPane.showMessageDialog(null,
+											    "You can't have lines overlap.",
+											    "Something happened",
+											    JOptionPane.ERROR_MESSAGE);
+									}
+								}else{
 									int xpos = lines[argInt].getX() + arg0.getX();
 									int ypos = lines[argInt].getY() + arg0.getY();
 									switch(lines[argInt].GetOrientation()){

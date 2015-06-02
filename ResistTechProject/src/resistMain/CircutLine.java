@@ -26,12 +26,12 @@ public class CircutLine extends JProgressBar {
 	}
 	public boolean AddNext(byte orient,int val){
 		System.out.println("( "+orient+" != "+orientation+" && "+(orient%1)+" == "+(orientation%1)+") || "+nextLine[orient]+" != -1");
-		if ((orient!=orientation && orient%1==orientation%1)||nextLine[orient] != -1){ 
+		if ((orient!=orientation && orient%2==orientation%2)||nextLine[orient] != -1){ 
 			System.err.println("Invalid AddNext");
 			return false;
 		}
 		System.out.println("Valid AddNext");
-		nextLine[orientation] = val;
+		nextLine[orient] = val;
 		return true;
 	}
 	public int getNext(byte orient,int val){
