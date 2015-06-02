@@ -7,7 +7,7 @@ public class CircutLine extends JProgressBar {
 	//Functions that Create an array of objects
 	final int maxResistors = 16;
 	private byte orientation = 0;
-	private int nextLine = -1;
+	private int[] nextLine = {-1,-1,-1,-1};
 	//East = 0
 	//South = 1
 	//West = 2
@@ -18,15 +18,24 @@ public class CircutLine extends JProgressBar {
 	public void SetPanel(JPanel pan){
 		contentplane = pan;
 	}
-	
+	public byte GetOrientation(){
+		return orientation;
+	}
 	public void SetOrientation(byte val){
 		orientation = val;
 	}
-	public void setNext(int val){
-		nextLine = val;
+	public boolean AddNext(byte orient,int val){
+		System.out.println("( "+orient+" != "+orientation+" && "+(orient%1)+" == "+(orientation%1)+") || "+nextLine[orient]+" != -1");
+		if ((orient!=orientation && orient%1==orientation%1)||nextLine[orient] != -1){ 
+			System.err.println("Invalid AddNext");
+			return false;
+		}
+		System.out.println("Valid AddNext");
+		nextLine[orientation] = val;
+		return true;
 	}
-	public int getNext(int val){
-		return nextLine;
+	public int getNext(byte orient,int val){
+		return nextLine[orient];
 	}
 	public int GetResistorCount(){
 		int result = 0;
@@ -56,6 +65,8 @@ public class CircutLine extends JProgressBar {
 		if (resistors[id] == null){
 			throw new ArrayIndexOutOfBoundsException();
 		}
+		
+		resistors[id].setVisible(false); // TODO: Figure out how to properly remove something
 		resistors[id].removeAll(); // Kill the specified resistor
 		resistors[id] = null;
 		if (id+1 < maxResistors){
@@ -113,7 +124,8 @@ public class CircutLine extends JProgressBar {
 			resistors[i+1] = resistors[i];
 		}
 		resistors[newid] = new Resistor();
-		resistors[newid].setBounds(xpos-10, ypos-4, 20, 8);
+		
+		resistors[newid].setBounds(xpos-40, ypos-10, 80, 20);
 		resistors[newid].SetID(newid);
 		contentplane.add(resistors[newid]);
 		return resistors[newid];
