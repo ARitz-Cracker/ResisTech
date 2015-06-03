@@ -30,7 +30,7 @@ public class CircutLine extends JProgressBar {
 			System.err.println("Invalid AddNext");
 			return false;
 		}
-		System.out.println("Valid AddNext");
+		System.out.println("AddNext Added at orientation "+orient+" with the new line being "+val);
 		nextLine[orient] = val;
 		return true;
 	}

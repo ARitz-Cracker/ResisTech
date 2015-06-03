@@ -229,6 +229,11 @@ public class GUICalc extends JFrame {
 						    e.getMessage(),
 						    "Something happened",
 						    JOptionPane.ERROR_MESSAGE);
+				}catch(StackOverflowError e){
+					JOptionPane.showMessageDialog(null,
+						    "Infinite loop!",
+						    "Nooooooo",
+						    JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -385,6 +390,7 @@ public class GUICalc extends JFrame {
 								    JOptionPane.YES_NO_OPTION,
 								    JOptionPane.QUESTION_MESSAGE, null, null, null) == 0){
 									startLine = argInt;
+									System.out.println("New starting point is "+startLine);
 								}
 								break;
 							case MODE_LINE:
