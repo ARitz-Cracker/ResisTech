@@ -398,12 +398,15 @@ public class GUICalc extends JFrame {
 									System.out.println("oldLine == "+oldLine);
 									boolean valid = oldLine == -1 || lines[oldLine].AddNext(lines[newLine].GetOrientation(), newLine);
 									//lines[argInt]
+									/*
 									for (byte i=0;i<4;i+=1){
 										int nex = lines[argInt].GetNext(i);
 										if (nex != -1){
 											valid = valid && lines[newLine].AddNext(i, nex);
 										}
-									}									
+									}
+									*/									
+									valid = valid && lines[newLine].AddNext(lines[argInt].GetOrientation(), argInt);
 									if (valid){
 										dragging = false;
 									}else{
