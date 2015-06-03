@@ -490,12 +490,12 @@ public class GUICalc extends JFrame {
 														needinput = false;
 													} else {
 														
-														lines[lineid].GetResistor(resistorid).SetLoad(Integer.parseInt(input));
+														lines[lineid].GetResistor(resistorid).SetLoad(Double.parseDouble(input));
 														needinput = false;
 													}
 													}catch(NumberFormatException e){
 														JOptionPane.showMessageDialog(null,
-																"Input must be integer values.");
+																"Input must be a number.");
 													}
 												}
 										}
