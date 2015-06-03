@@ -395,6 +395,7 @@ public class GUICalc extends JFrame {
 								break;
 							case MODE_LINE:
 								if (dragging){
+									System.out.println("oldLine == "+oldLine);
 									boolean valid = oldLine == -1 || lines[oldLine].AddNext(lines[newLine].GetOrientation(), newLine);
 									//lines[argInt]
 									for (byte i=0;i<4;i+=1){
