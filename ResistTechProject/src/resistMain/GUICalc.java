@@ -212,7 +212,7 @@ public class GUICalc extends JFrame {
 				mode = MODE_NONE;
 			}
 		});
-		selButt.setToolTipText("Click on objects to delete them.");
+		selButt.setToolTipText("Click to select a starting point or change a resistor.");
 		selButt.setBounds(375, 0, 125, 29);
 		contentPane.add(selButt);
 		
@@ -237,8 +237,8 @@ public class GUICalc extends JFrame {
 				}
 			}
 		});
-		calcButt.setToolTipText("Click on objects to delete them.");
-		calcButt.setBounds(502, 0, 125, 29);
+		calcButt.setToolTipText("Click to solve the circuit.");
+		calcButt.setBounds(500, 0, 125, 29);
 		contentPane.add(calcButt);
 	}
 	private CircutLine[] fnLineArray(int m) {
